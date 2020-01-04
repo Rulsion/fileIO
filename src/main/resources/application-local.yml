@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: fsmnpc
+  freemarker:
+    request-context-attribute: req
+    suffix: .ftl
+    content-type: text/html
+    enabled: true
+    cache: false
+    template-loader-path: classpath:/templates #模板加载路径
+    charset: UTF-8
+    settings:
+      number_format: '0.##' #数字格式化，无小数点
+
+  profiles:
+    include: []
+  jmx:
+    enabled: false
+  jackson:
+    serialization:
+     FAIL_ON_EMPTY_BEANS: false
+
+#  datasource:
+#    url: jdbc:oracle:thin:@192.168.1.111:1521:TWDB
+#    username: tianwen
+#    password: tianwen
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    favicon:
+      enabled: false
+
+
+server:
+  port: 9560
+#
+#logging:
+#  config: classpath:log4j2-dev.yml
+#mybatis:
+#  mapper-locations: classpath:mapper/*Mapper.xml
+#  config-location: classpath:config/mybatis-config.xml
+#
+#memcached:
+#  servers: 192.168.1.88:11211
+#  failover: true
+#  initConn: 100
+#  minConn: 20
+#  maxConn: 1000
+#  maintSleep: 50
+#  nagel: false
+#  socketTO: 3000
+#  aliveCheck: true
+#
+#systemconfig:
+#  enviroment: local
+#  #体检网过滤器拦截链接
+#  exclude:
+#      - /user/toUserCenter
+#      - /order/toPay
+#      - /user/orderDetail
+#      - /pay**
+#      - /user/myOrder
+#      - /user/getOrderPageData
+#  remotePayUrl: https://m.tijian8.com
+#  esServerUrl: http://192.168.1.88:8100
+#  freemarker:
+#    ctxImg: https://img.tijian8.com
+#  payType: Y
+#  #短信验证码超过的条数忽略的手机号
+#  ignoreMobile:
+#    - 15070985218
+#    - 15826820233
+#    #支付一分钱的手机号
+#  payIgnoreMobile:
+#    - 15070985218
+#    - 13657495732
+#    - 19146453305
+#    - 13097369989
+#  fsmnEsids:
+#    - 56293
+#    - 50025
+#    - 50097
+#  userAgents: [iphone,android,phone,mobile,wap,netfront,java,operamobi,operamini,ucweb,windowsce,symbian,series,webos,sony,blackberry,dopod,nokia,samsung,palmsource,xda,pieplus,meizu,midp,cldc,motorola,foma,docomo,up.browser,up.link,blazer,helio,hosin,huawei,novarra,coolpad,webos,techfaith,palmsource,alcatel,amoi,ktouch,nexian,ericsson,philips,sagem,wellcom,bunjalloo,maui,smartphone,iemobile,spice,bird,zte-,longcos,pantech,gionee,portalmmm,jigbrowser,hiptop,benq,haier,^lct,320x320,240x320,176x220,w3c,acs-,alav,alca,amoi,audi,avan,benq,bird,blac,blaz,brew,cell,cldc,cmd-,dang,doco,eric,hipt,inno,ipaq,java,jigs,kddi,keji,leno,lg-c,lg-d,lg-g,lge-,maui,maxo,midp,mits,mmef,mobi,mot-,moto,mwbp,nec-,newt,noki,oper,palm,pana,pant,phil,play,port,prox,qwap,sage,sams,sany,sch-,sec-,send,seri,sgh-,shar,sie-,siem,smal,smar,sony,sph-,symb,t-mo,teli,tim-,tsm-,upg1,upsi,vk-v,voda,wap-,wapa,wapi,wapp,wapr,webc,winw,winw,xda,xda-,Googlebot-Mobile, Googlebot,Googlebot-Image,Feedfetcher-Google,Baiduspider,Yahoo! Slurp,YodaoBot,Sosospider,Sosoimagespider,Sogou Web Sprider,Sogou web spider,Sogou Orion spider,Sogou-Test-Spider]
+#  spiderAgents: [Googlebot,Googlebot-Image,Feedfetcher-Google,Baiduspider,Yahoo! Slurp,YodaoBot,Sosospider,Sosoimagespider,Sogou Web Sprider,Sogou web spider,Sogou Orion spider,Sogou-Test-Spider]

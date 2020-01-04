@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    # 本地
+    active: local
+    # 测试环境
+    #active: dev
+    # 线上
+    #active: online
