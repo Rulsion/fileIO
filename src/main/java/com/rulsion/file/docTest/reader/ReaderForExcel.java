@@ -18,10 +18,7 @@ import java.io.IOException;
 public abstract class ReaderForExcel extends ReaderForOffice {
     protected Workbook workbook;
 
-    public ReaderForExcel(String fileName) throws IOException {
-        super(fileName);
 
-    }
 
     @Override
     public String Read() throws IOException {

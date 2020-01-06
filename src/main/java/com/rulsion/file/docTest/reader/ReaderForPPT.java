@@ -20,10 +20,6 @@ public abstract class ReaderForPPT extends ReaderForOffice {
 
     protected SlideShow slideShow;
 
-    public ReaderForPPT(String fileName) {
-        super(fileName);
-    }
-
     @Override
     public String Read() throws IOException {
 
@@ -44,7 +40,7 @@ public abstract class ReaderForPPT extends ReaderForOffice {
                     PictureData pictData = pict.getPictureData();
                     byte[] data = pictData.getData();
                     PictureData.PictureType type = pictData.getType();
-                    String imgFilePath = filePath + this.fileName + suffix + File.separator + (pointIdx + 1);
+                    String imgFilePath = "D:\\img";
                     FileUtil.mkdir(imgFilePath);
                     FileOutputStream out = new FileOutputStream(imgFilePath + File.separator + idx + type.extension);
                     out.write(data);

@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PPTUtil {
@@ -38,11 +39,10 @@ public class PPTUtil {
         }
 
         SlideShow slideShow = readerForPPT.getSlideShow();
-        String filePath = readerForPPT.getFilePath();
-        String fileName = readerForPPT.getFileName();
+
         Dimension pgsize = slideShow.getPageSize();
         slide.getTitle();
-        String saveImagePathName = filePath + fileName + readerForPPT.getSuffix() + "_IMG" + readerForPPT.getSuffix();
+        String saveImagePathName = LocalDateTime.now().toString();
         FileUtil.mkdir(saveImagePathName);
 
         BufferedImage img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);

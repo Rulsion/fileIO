@@ -7,14 +7,15 @@ import org.apache.poi.xslf.usermodel.XMLSlideShow;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Data
 public class PPTXReader extends ReaderForPPT {
 
 
-    public PPTXReader(String fileName) throws IOException {
-        super(fileName);
-        this.slideShow = new XMLSlideShow(new FileInputStream(fileName));
+    public PPTXReader(InputStream inputStream) throws IOException {
+
+        this.slideShow = new XMLSlideShow(inputStream);
 
     }
 

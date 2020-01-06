@@ -12,13 +12,14 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class DOCXReader extends ReaderForWord {
     private XWPFDocument document;
-    public DOCXReader(String fileName) throws IOException {
-        super(fileName);
-        document = new XWPFDocument(new FileInputStream(new File(fileName)));
+    public DOCXReader(InputStream inputStream) throws IOException {
+
+        document = new XWPFDocument(inputStream);
     }
 
     @Override

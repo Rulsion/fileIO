@@ -9,23 +9,17 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Data
 public class PDFReader implements DocReader {
-    private String filePath;
-    private String fileName;
+
     private PDDocument document;
 
-    public PDFReader(String fileName) throws IOException {
-        File file = new File(fileName);
-        PDDocument document = PDDocument.load(file);
-        //分割路径
-        this.filePath = fileName.substring(0, fileName.lastIndexOf("\\"));
+    public PDFReader(InputStream inputStream) throws IOException {
 
-        // 分割文件名
-        this.fileName = fileName.substring(fileName.lastIndexOf("\\"), fileName.lastIndexOf("."));
-
+        PDDocument document = PDDocument.load(inputStream);
         this.document = document;
     }
 

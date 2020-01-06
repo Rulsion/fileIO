@@ -6,10 +6,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class XLSXReader extends ReaderForExcel {
-    public XLSXReader(String fileName) throws IOException {
-        super(fileName);
-        this.workbook = new XSSFWorkbook(new FileInputStream(fileName));
+    public XLSXReader(InputStream fileName) throws IOException {
+        this.workbook = new XSSFWorkbook(fileName);
     }
 }

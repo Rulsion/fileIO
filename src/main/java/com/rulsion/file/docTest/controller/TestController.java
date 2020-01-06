@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -28,16 +29,16 @@ public class TestController {
 
     //处理文件上传
     @PostMapping(value = "/testUploadFile")
-    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws InterruptedException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws  IOException {
         testService.uploadFile(file);
         return "success";
     }
 
     //处理多文件上传
     @PostMapping(value = "/testUploadFiles")
-    public String multipleFilesUpload(HttpServletRequest request) throws InterruptedException {
+    public String multipleFilesUpload(@RequestParam("file") List<MultipartFile> files) throws IOException {
 
-        testService.uploadFiles(request);
+        testService.uploadFiles(files);
         return "success";
 
     }

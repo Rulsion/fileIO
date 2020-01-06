@@ -14,7 +14,9 @@
 <body>
 <form method="POST" enctype="multipart/form-data" action="/testUploadFiles">
     <p>文件1：<input type="file" name="file" id="inputFile" multiple webkitdirectory/></p>
+    <p>文件1：<input type="file2" name="file" id="inputFile" multiple /></p>
     <p><input type="submit" value="上传"/></p>
 </form>
 </body>
 </html>
+

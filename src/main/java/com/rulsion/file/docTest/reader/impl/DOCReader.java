@@ -21,11 +21,10 @@ public class DOCReader extends ReaderForWord {
     private HWPFDocument document;
     private WordExtractor ex;
 
-    public DOCReader(String fileName) throws IOException {
-        super(fileName);
-        document = new HWPFDocument(new FileInputStream(new File(fileName)));
-        InputStream is = new FileInputStream(new File(fileName));
-        ex = new WordExtractor(is);
+    public DOCReader(InputStream inputStream) throws IOException {
+
+        document = new HWPFDocument(inputStream);
+        ex = new WordExtractor(inputStream);
     }
 
     @Override

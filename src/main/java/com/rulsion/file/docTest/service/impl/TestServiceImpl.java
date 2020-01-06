@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,7 +25,10 @@ public class TestServiceImpl implements TestService {
    private  FileAsync fileAsync;
     @Override
     public String readFile(String fileName) throws IOException {
-        DocReader docReader = DocReaderFactory.getReaderInstance(fileName);
+        fileName.replaceAll("/|\\\\",File.separator);
+        String fileName1  = fileName.substring(fileName.lastIndexOf(File.separator));
+        String suffix = fileName1.substring(fileName1.lastIndexOf("."));
+        DocReader docReader = DocReaderFactory.getReaderInstance(new FileInputStream(fileName),suffix);
         if (SysUtil.isEmpty(docReader)) {
             return null;
         }
@@ -33,15 +37,13 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void uploadFile(MultipartFile file) throws InterruptedException {
+    public void uploadFile(MultipartFile file) throws IOException {
 
         fileAsync.saveFile(file);
     }
 
     @Override
-    public void uploadFiles(HttpServletRequest request) throws InterruptedException {
-        //获取上传的文件数组
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+    public void uploadFiles(List<MultipartFile> files) throws IOException {
         //遍历处理文件
         for (MultipartFile file : files) {
             fileAsync.saveFile(file);

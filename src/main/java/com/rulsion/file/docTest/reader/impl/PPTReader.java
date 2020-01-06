@@ -7,13 +7,14 @@ import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.hslf.usermodel.HSLFSlideShowImpl;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 @Data
 public class PPTReader extends ReaderForPPT {
 
-    public PPTReader(String fileName) throws IOException {
-        super(fileName);
-        this.slideShow = new HSLFSlideShow(new HSLFSlideShowImpl(fileName));
+    public PPTReader(InputStream inputStream) throws IOException {
+
+        this.slideShow = new HSLFSlideShow(new HSLFSlideShowImpl(inputStream));
     }
 
 }
