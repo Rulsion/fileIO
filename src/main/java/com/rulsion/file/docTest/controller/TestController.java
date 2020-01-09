@@ -1,12 +1,18 @@
 package com.rulsion.file.docTest.controller;
 
+import com.rulsion.file.docTest.entity.Webuploader;
 import com.rulsion.file.docTest.service.TestService;
+import com.rulsion.file.util.JsonResponseResult;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,9 +35,8 @@ public class TestController {
 
     //处理文件上传
     @PostMapping(value = "/testUploadFile")
-    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws  IOException {
-        testService.uploadFile(file);
-        return "success";
+    public JsonResponseResult uploadImg(Webuploader uploader, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return testService.uploadFile(uploader, request, response);
     }
 
     //处理多文件上传

@@ -20,12 +20,11 @@ spring:
     serialization:
      FAIL_ON_EMPTY_BEANS: false
 
-#  datasource:
-#    url: jdbc:oracle:thin:@192.168.1.111:1521:TWDB
-#    username: tianwen
-#    password: tianwen
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
-#    type: com.alibaba.druid.pool.DruidDataSource
+  datasource:
+    url: jdbc:mysql://120.77.214.133:3306/hmdb?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1qazxsw2
   mvc:
     favicon:
       enabled: false
