@@ -2,6 +2,7 @@ package com.rulsion.file.docTest.controller;
 
 import com.rulsion.file.docTest.entity.Webuploader;
 import com.rulsion.file.docTest.service.TestService;
+import com.rulsion.file.util.FileUtil;
 import com.rulsion.file.util.JsonResponseResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class TestController {
     private TestService testService;
 
     @GetMapping("/test")
-    public String test(@RequestParam String fileName) throws IOException {
+    public String test(@RequestParam String fileName) throws IOException, ParserConfigurationException {
         return testService.readFile(fileName);
     }
 
@@ -47,4 +49,7 @@ public class TestController {
         return "success";
 
     }
+
+
+
 }

@@ -9,11 +9,12 @@ import com.rulsion.file.util.SysUtil;
 import lombok.Data;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.hwpf.model.PicturesTable;
+import org.apache.poi.hwpf.usermodel.Picture;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 public class DOCReader extends ReaderForWord {
@@ -28,10 +29,21 @@ public class DOCReader extends ReaderForWord {
     }
 
     @Override
-    public String Read() {
+    public String Read() throws IOException {
+        // 文档图片内容
+        PicturesTable picturesTable = document.getPicturesTable();
+        List<Picture> pictures = picturesTable.getAllPictures();
+
+        int i = 0;
+        for (Picture picture : pictures) {
+            // 输出图片到磁盘
+            OutputStream out = new FileOutputStream( new File("C:\\Users\\Administrator\\Desktop\\test\\"  + i++ + "." + picture.suggestFileExtension()));//输出图片文件到磁盘
+            picture.writeImageContent(out);
+            out.close();
+        }
         FileRecord fileRecord = new FileRecord();
         String[] strs = ex.getParagraphText();
-        for (int i = 0; i < strs.length; i++) {
+        for (i = 0; i < strs.length; i++) {
             String text = strs[i];
             if (SysUtil.isEmpty(text)) continue;
 

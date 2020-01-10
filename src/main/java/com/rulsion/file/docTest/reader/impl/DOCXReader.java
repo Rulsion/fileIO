@@ -8,15 +8,14 @@ import com.rulsion.file.docTest.reader.ReaderForWord;
 import com.rulsion.file.util.SysUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFPictureData;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 public class DOCXReader extends ReaderForWord {
     private XWPFDocument document;
+
     public DOCXReader(InputStream inputStream) throws IOException {
 
         document = new XWPFDocument(inputStream);
@@ -27,8 +26,19 @@ public class DOCXReader extends ReaderForWord {
 
         FileRecord fileRecord = new FileRecord();
 
+        List<XWPFPictureData> xwpfPictureDatas = document.getAllPackagePictures();
+        for (int i = 0; i < xwpfPictureDatas.size(); i++) {
+            XWPFPictureData xwpfPictureData = xwpfPictureDatas.get(i);
+
+            FileOutputStream out = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\test\\" + xwpfPictureData.getFileName() + ".jpg");
+            out.write(xwpfPictureData.getData());
+            out.close();
+        }
+
         List<XWPFParagraph> xwpfParagraphs = document.getParagraphs();
+
         for (int i = 0; i < xwpfParagraphs.size(); i++) {
+
 
             XWPFParagraph xwpfParagraph = xwpfParagraphs.get(i);
 

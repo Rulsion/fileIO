@@ -2,15 +2,13 @@ package com.rulsion.file.docTest.reader.impl;
 
 
 import com.rulsion.file.docTest.reader.DocReader;
+import com.rulsion.file.util.FileUtil;
 import lombok.Data;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.PDFTextStripperByArea;
 
-import java.io.File;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Data
 public class PDFReader implements DocReader {
@@ -24,18 +22,11 @@ public class PDFReader implements DocReader {
     }
 
     @Override
-    public String Read() throws IOException {
-        PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-        // 设置是否排序
-        stripper.setSortByPosition(false);
-        // 设置起始页
-        stripper.setStartPage(1);
-        // 设置结束页
-        stripper.setEndPage(document.getNumberOfPages());
-       List<String> strs = stripper.getRegions();
-        PDFTextStripper pdfStripper = new PDFTextStripper();
+    public String Read() throws IOException, ParserConfigurationException {
 
-        String text = pdfStripper.getText(document);
-        return text;
+        FileUtil.pdftohtml(document, "C:\\Users\\Administrator\\Desktop\\demo.html");
+//        FileUtil.readText(document);
+        return "success";
+
     }
 }

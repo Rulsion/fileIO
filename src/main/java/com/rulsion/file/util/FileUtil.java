@@ -4,9 +4,17 @@ import com.rulsion.file.docTest.entity.UploadInfo;
 import com.rulsion.file.docTest.entity.Webuploader;
 import com.rulsion.file.docTest.exception.MkdirException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
+import org.fit.pdfdom.BoxStyle;
+import org.fit.pdfdom.PDFDomTree;
+import org.fit.pdfdom.PDFDomTreeConfig;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -85,7 +93,7 @@ public class FileUtil {
     }
 
 
-    public static void Uploaded(Webuploader uploader, String uploadFolderPath, String fileName, String ext, HttpServletRequest request) throws IOException {
+    public static void Uploaded(Webuploader uploader, String uploadFolderPath, String fileName, String ext) throws IOException {
         String md5 = uploader.getMd5value();
         synchronized (uploadInfoList) {
             if ((md5 != null && !md5.equals("")) &&
@@ -99,7 +107,7 @@ public class FileUtil {
         int chunksNumber = Integer.parseInt(uploader.getChunks());
 
         if (allUploaded) {
-            mergeFile(uploader,chunksNumber, ext, uploadFolderPath, request);
+            mergeFile(uploader,chunksNumber, ext, uploadFolderPath);
             // fileService.save(new
             // com.zhangzhihao.FileUpload.Java.Model.File(guid + ext, md5, new
             // Date()));
@@ -129,14 +137,17 @@ public class FileUtil {
         return bool;
     }
 
-    private static void mergeFile(Webuploader uploader,int chunksNumber, String ext, String uploadFolderPath,
-                                  HttpServletRequest request) throws IOException {
+    private static void mergeFile(Webuploader uploader,int chunksNumber, String ext, String uploadFolderPath) throws IOException {
         SimpleDateFormat year = new SimpleDateFormat("yyyyMMdd");
 
         Date date = new Date();
 
-        String destPath = getRealPath(request) + File.separator + "fileDate" + File.separator + year.format(date);// 文件路径
-        String newName = System.currentTimeMillis() + ext;// 文件新名称
+        String pathOfFile = uploader.getPathName().substring(0,uploader.getPathName().lastIndexOf(File.separator));
+
+        String destPath = uploadFolderPath +File.separator+"fileDate"+File.separator+ year.format(date)+File.separator+pathOfFile ;// 文件路径
+
+        String newName = uploader.getName();// 文件新名称
+
         Vector<InputStream> v = new Vector<>();
         for (int i = 0; i < chunksNumber; i++) {
             String tempFilePath = uploadFolderPath + i + ext;
@@ -181,6 +192,37 @@ public class FileUtil {
             }
 
         }
+    }
+
+    public static void pdftohtml(PDDocument document, String htmlPath) throws IOException, ParserConfigurationException {
+        //加载PDF文档
+
+        // 输出pdf文本
+//        readText(document);
+        //将字节流转换成字符流
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(htmlPath)), "UTF-8"));
+        //实例化pdfdom树对象
+        PDFDomTree pdfDomTree = new PDFDomTree(PDFDomTreeConfig.createDefaultConfig()){
+            //字体大小不一致，重写方法重新设置字体大小
+            @Override
+            protected void updateStyle(BoxStyle bstyle, TextPosition text) {
+                super.updateStyle(bstyle, text);
+                bstyle.setFontSize(bstyle.getFontSize() - 7);
+            }
+        };
+
+        //开始写入html文件
+        pdfDomTree.writeText(document, out);
+        out.write("<script src=\"/static/js/jquery.min.js\"");
+        out.flush();
+        out.close();
+        document.close();
+    }
+
+    public static String readText(PDDocument document) throws IOException {
+        PDFTextStripper stripper = new PDFTextStripper();
+        String text = stripper.getText(document);
+        return text;
     }
 
 

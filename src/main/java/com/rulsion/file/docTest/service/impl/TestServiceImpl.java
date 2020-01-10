@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -42,10 +43,10 @@ public class TestServiceImpl implements TestService {
     private FileMapper fileMapper;
 
     @Override
-    public String readFile(String fileName) throws IOException {
-        fileName.replaceAll("/|\\\\", File.separator);
-        String fileName1 = fileName.substring(fileName.lastIndexOf(File.separator));
-        String suffix = fileName1.substring(fileName1.lastIndexOf("."));
+    public String readFile(String fileName) throws IOException, ParserConfigurationException {
+        fileName.replaceAll("[/]", File.separator);
+        String fileName1 = fileName.substring(fileName.lastIndexOf(File.separator)+1);
+        String suffix = fileName1.substring(fileName1.lastIndexOf(".")+1);
         DocReader docReader = DocReaderFactory.getReaderInstance(new FileInputStream(fileName), suffix);
         if (SysUtil.isEmpty(docReader)) {
             return null;
@@ -75,7 +76,7 @@ public class TestServiceImpl implements TestService {
             FileUtil.saveFile(mergePath, fileName, uploader.getFile());
 
             // 验证所有分块是否上传成功，成功的话进行合并
-            FileUtil.Uploaded(uploader, mergePath, fileName, ext, request);
+            FileUtil.Uploaded(uploader, mergePath, fileName, ext);
 
         } else {
 
